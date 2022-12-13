@@ -1,1 +1,1 @@
-gcc snake.c engine.c
+gcc snake.c engine.c -o snake -O3

@@ -1,22 +1,36 @@
 #include "snake.h"
 
 Snake * head;
+Snake * last;
 
 void initSnake() {
 
     head = (Snake *)malloc(sizeof(Snake));
 
     *head = (Snake){
-        .x = STARTING_X + 1, .y = STARTING_Y + 1, .length = 2, .next = NULL, .currDir = DOWN, .symbol = SNAKE_HEAD_TILE
+        .x = STARTING_X + 5, .y = STARTING_Y + 5, .prev = NULL, .next = NULL, .currDir = DOWN, .symbol = SNAKE_HEAD_TILE
     };
+
+    last = head;
+
+    insertPart(head);
+    insertPart(head);
+    insertPart(head);
 
 
 }
 
 void insertPart(Snake * _head) {
 
+    // if(DEBUG){
+    //     FILE * fp = fopen("debug.txt", "a");
 
-    head->length++;
+    //     fprintf(fp, "Length: %d\n", length);
+
+    //     fclose(fp);
+
+    // }
+   
 
     Snake * _newPart = (Snake *)malloc(sizeof(Snake));
 
@@ -44,25 +58,22 @@ void insertPart(Snake * _head) {
             break;
     }
 
-
-   while(_head->next != NULL) {
-        _head = _head->next;
-    }
-
-    *_newPart = (Snake){
-        .x = _head->x + addX, .y = _head->y + addY, .length = head->length, .next = NULL, .currDir = _head->currDir, .symbol = SNAKE_BODY_TILE
+    *_newPart = (Snake) {
+        .x = last->x + addX, .y = last->y + addY, .prev = last,.next = NULL, .currDir = last->currDir, .symbol = SNAKE_BODY_TILE
     };
 
-    _head->next = _newPart;
+    last->next = _newPart;
 
-    if(DEBUG){
-        FILE * fp = fopen("debug.txt", "a");
+    last = _newPart;
 
-        fprintf(fp, "New part added: \n\t{ x: %d, y: %d, length: %d, next: %d}\n", _newPart->x, _newPart->y, _newPart->length, _newPart->next);
+    // if(DEBUG){
+    //     FILE * fp = fopen("debug.txt", "a");
 
-        fclose(fp);
+    //     fprintf(fp, "New part added: \n\t{ x: %d, y: %d, next: %d}\n", _newPart->x, _newPart->y, _newPart->next);
 
-    }
+    //     fclose(fp);
+
+    // }
 
 }
 

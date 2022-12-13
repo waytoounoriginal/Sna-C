@@ -10,17 +10,19 @@
 typedef struct snake {
     int x;
     int y;
-    int length;
 
     Keys currDir;
 
     char symbol;
 
     struct snake * next;
+    struct snake * prev;
 
 } Snake;
 
 extern Snake * head;
+extern Snake * last;
+
 
 void initSnake();
 
