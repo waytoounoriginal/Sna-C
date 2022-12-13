@@ -8,7 +8,7 @@ powershell write-host "Starting Job..." -fore green
 cd ./sources
 powershell write-host "Building Sna-C..." -fore green
 
-gcc snake.c engine.c -o snake -O2 -Wall -Winit-self -Wpointer-arith
+gcc snake.c engine.c -o snake -O2 -Wall -Winit-self -Wpointer-arith -Werror -Wfatal-errors -Wno-unused-function
 move snake.exe ../
 
 cd ../
