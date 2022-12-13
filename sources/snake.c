@@ -13,23 +13,15 @@ void initSnake() {
 
     last = head;
 
-    insertPart(head);
-    insertPart(head);
-    insertPart(head);
+    for(int i = 0; i < STARTING_LENGTH; i++){
+        insertPart(head);
+    }
 
 
 }
 
 void insertPart(Snake * _head) {
 
-    // if(DEBUG){
-    //     FILE * fp = fopen("debug.txt", "a");
-
-    //     fprintf(fp, "Length: %d\n", length);
-
-    //     fclose(fp);
-
-    // }
    
 
     Snake * _newPart = (Snake *)malloc(sizeof(Snake));
@@ -68,15 +60,6 @@ void insertPart(Snake * _head) {
     last->next = _newPart;
 
     last = _newPart;
-
-    // if(DEBUG){
-    //     FILE * fp = fopen("debug.txt", "a");
-
-    //     fprintf(fp, "New part added: \n\t{ x: %d, y: %d, next: %d}\n", _newPart->x, _newPart->y, _newPart->next);
-
-    //     fclose(fp);
-
-    // }
 
 }
 

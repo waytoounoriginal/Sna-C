@@ -112,40 +112,44 @@ void input()
 
 void collisionCheck(Snake *_head)
 {
-    switch(map[head->y][head->x]){
-        case WALL_TILE:
-            
-            switch(head->currDir){
-                case UP:
-                    head->y = MAP_HEIGHT - 2;
-                    break;
+    switch (map[head->y][head->x])
+    {
+    case WALL_TILE:
 
-                case DOWN:
-                    head->y = 1;
-                    break;
-
-                case LEFT:
-                    head->x = MAP_WIDTH - 2;
-                    break;
-
-                case RIGHT:
-                    head->x = 1;
-                    break;
-            }
+        switch (head->currDir)
+        {
+        case UP:
+            head->y = MAP_HEIGHT - 3;
             break;
 
-        case FRUIT_TILE:
-
-            insertPart(head);
-            spawnFruit(&fruit);
-            updateScore();
-            
-            break;
-        
-        case SNAKE_BODY_TILE:
-            exit(0);
+        case DOWN:
+            head->y = 2;
             break;
 
+        case LEFT:
+            head->x = MAP_WIDTH - 3;
+            break;
+
+        case RIGHT:
+            head->x = 2;
+            break;
+
+        default:
+            break;
+        }
+        break;
+
+    case FRUIT_TILE:
+
+        insertPart(head);
+        spawnFruit(&fruit);
+        updateScore();
+
+        break;
+
+    case SNAKE_BODY_TILE:
+        exit(0);
+        break;
     }
 }
 
@@ -186,6 +190,9 @@ void drawSnake(Snake *_head)
     case RIGHT:
         _head->x++;
         break;
+
+    default:
+        break;
     }
 
     collisionCheck(_head);
@@ -196,22 +203,25 @@ void drawSnake(Snake *_head)
 
     while (_head != head)
     {
-        _head->currDir = _head->prev->currDir;
+        Keys _prevCurrDir = _head->prev->currDir;
+        int _prevX = _head->prev->x, _prevY = _head->prev->y;
+
+        _head->currDir = _prevCurrDir;
 
         if (_head->prev != head)
         {
-            _head->x = _head->prev->x;
-            _head->y = _head->prev->y;
+            _head->x = _prevX;
+            _head->y = _prevY;
         }
         else
         {
-            _head->x = _head->prev->currDir == UP || _head->prev->currDir == DOWN 
-                ? _head->prev->x 
-                : _head->prev->x + (_head->prev->currDir == LEFT ? 1 : -1);
+            _head->x = _prevCurrDir == UP || _prevCurrDir == DOWN
+                           ? _prevX
+                           : _prevX + (_prevCurrDir == LEFT ? 1 : -1);
 
-            _head->y = _head->prev->currDir == LEFT || _head->prev->currDir == RIGHT 
-                ? _head->prev->y 
-                : _head->prev->y + (_head->prev->currDir == UP ? 1 : -1);
+            _head->y = _prevCurrDir == LEFT || _prevCurrDir == RIGHT
+                           ? _prevY
+                           : _prevY + (_prevCurrDir == UP ? 1 : -1);
         }
 
         collisionCheck(_head);
@@ -240,10 +250,10 @@ void drawFruit(Fruit *_fruit)
     map[_fruit->y][_fruit->x] = FRUIT_TILE;
 }
 
-void updateScore() {
+void updateScore()
+{
     MOVE_CURSOR(SCORE_X, SCORE_Y);
-    printf("%d", length ++);
+    printf("%d", length++);
 
     CNS_CLEAR;
 }
-
