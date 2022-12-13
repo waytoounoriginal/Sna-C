@@ -1,4 +1,4 @@
 *.exe
-*.txt
+debug.txt
 .vscode
 .gitingore
