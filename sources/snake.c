@@ -56,6 +56,9 @@ void insertPart(Snake * _head) {
             addX = -1;
             addY = 0;
             break;
+        
+        default:
+            break;
     }
 
     *_newPart = (Snake) {

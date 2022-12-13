@@ -112,48 +112,40 @@ void input()
 
 void collisionCheck(Snake *_head)
 {
+    switch(map[head->y][head->x]){
+        case WALL_TILE:
+            
+            switch(head->currDir){
+                case UP:
+                    head->y = MAP_HEIGHT - 2;
+                    break;
 
-    switch (_head->currDir)
-    {
+                case DOWN:
+                    head->y = 1;
+                    break;
 
-    case UP:
-        if (map[_head->y][_head->x] == WALL_TILE)
-        {
-            _head->y = MAP_HEIGHT - 2;
-        }
-        break;
+                case LEFT:
+                    head->x = MAP_WIDTH - 2;
+                    break;
 
-    case DOWN:
-        if (map[_head->y][_head->x] == WALL_TILE)
-        {
-            _head->y = 1;
-        }
-        break;
+                case RIGHT:
+                    head->x = 1;
+                    break;
+            }
+            break;
 
-    case LEFT:
-        if (map[_head->y][_head->x] == WALL_TILE)
-        {
-            _head->x = MAP_WIDTH - 2;
-        }
-        break;
+        case FRUIT_TILE:
 
-    case RIGHT:
-        if (map[_head->y][_head->x] == WALL_TILE)
-        {
-            _head->x = 1;
-        }
-        break;
-    }
+            insertPart(head);
+            spawnFruit(&fruit);
+            updateScore();
+            
+            break;
+        
+        case SNAKE_BODY_TILE:
+            exit(0);
+            break;
 
-    if (map[head->y][head->x] == FRUIT_TILE)
-    {
-        insertPart(head);
-        spawnFruit(&fruit);
-        updateScore();
-    }
-    else if (map[head->y][head->x] == SNAKE_BODY_TILE)
-    {
-        exit(0);
     }
 }
 
