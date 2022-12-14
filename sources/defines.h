@@ -31,6 +31,30 @@
 
 //  ========================
 //
+//  Versioning
+//
+//  ========================
+
+
+
+#define VERSION_MAJOR           1
+#define VERSION_MINOR           0
+#define VERSION_PATCH           1
+
+#define OWNER                   "Mike4544"
+#define CONTRIBUTORS            "Darius\nDeea\n"
+
+
+
+//  ========================
+
+
+
+
+
+
+//  ========================
+//
 //  Includes
 //
 //  ========================
@@ -39,8 +63,15 @@
 #include <stdlib.h>
 #include <conio.h>
 #include <time.h>
+#include <string.h>
 
-#include <windows.h>
+#ifdef _WIN32
+    #include <windows.h>
+#endif
+
+#ifdef __linux__
+    #include <unistd.h>
+#endif
 
 
 
@@ -68,6 +99,7 @@
 #define MOVE_CURSOR(x, y)       SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), (COORD){x, y});
 #define SLEEP                   _sleep(SLEEP_TIME);
 #define MAXIMIZE                ShowWindow( GetConsoleWindow() , SW_MAXIMIZE);
+#define ENABLE_ANSI             SetConsoleMode(GetStdHandle(STD_OUTPUT_HANDLE), ENABLE_VIRTUAL_TERMINAL_PROCESSING);
 
 //  The coordonates of the GUI
 #define GUI_X                   0
@@ -90,6 +122,7 @@
 
 //  The starting length of the snake
 #define STARTING_LENGTH         3
+#define SNAKE_SYMBOL_SIZE       7  // 7 = strlen(ANSI COLOR) + 1(symbol)
 
 
 //  The keys enum
@@ -107,6 +140,27 @@ typedef enum Keys {
     RIGHT   = 'D',
     EXIT    = 'X'
 } Keys;
+
+
+
+//  ========================
+//
+//  ANSI Escape Codes
+//
+//  ========================
+#define __ANSI__
+#ifdef __ANSI__
+
+  #define ANSI_BLACK              "\x1b[30m"
+  #define ANSI_RED                "\x1b[31m"
+  #define ANSI_GREEN              "\x1b[32m"
+  #define ANSI_YELLOW             "\x1b[33m"
+  #define ANSI_BLUE               "\x1b[34m"
+  #define ANSI_MAGENTA            "\x1b[35m"
+  #define ANSI_CYAN               "\x1b[36m"
+  #define ANSI_WHITE              "\x1b[37m"
+
+#endif
 
 
 

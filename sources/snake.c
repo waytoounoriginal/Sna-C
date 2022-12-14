@@ -3,12 +3,29 @@
 Snake * head;
 Snake * last;
 
+char * initSymbol(char * _color, char _symbol){
+
+    char * _tmp = (char *)calloc(2, sizeof(char));
+    _tmp[0] = _symbol;
+
+    char * symbol = (char *)calloc(SNAKE_SYMBOL_SIZE, sizeof(char));
+    strcat(symbol, _color);
+    strcat(symbol, _tmp);
+
+    free(_tmp);
+
+    return symbol;
+}
+
+
 void initSnake() {
 
     head = (Snake *)malloc(sizeof(Snake));
 
+    char * symbol = initSymbol(ANSI_CYAN, SNAKE_HEAD_TILE);
+
     *head = (Snake){
-        .x = STARTING_X + STARTING_LENGTH, .y = STARTING_Y + STARTING_LENGTH, .prev = NULL, .next = NULL, .currDir = DOWN, .symbol = SNAKE_HEAD_TILE
+        .x = STARTING_X + STARTING_LENGTH, .y = STARTING_Y + STARTING_LENGTH, .prev = NULL, .next = NULL, .currDir = DOWN, .symbol = symbol
     };
 
     last = head;
@@ -53,8 +70,10 @@ void insertPart(Snake * _head) {
             break;
     }
 
+    char * symbol = initSymbol(ANSI_CYAN, SNAKE_BODY_TILE);
+
     *_newPart = (Snake) {
-        .x = last->x + addX, .y = last->y + addY, .prev = last,.next = NULL, .currDir = last->currDir, .symbol = SNAKE_BODY_TILE
+        .x = last->x + addX, .y = last->y + addY, .prev = last,.next = NULL, .currDir = last->currDir, .symbol = symbol
     };
 
     last->next = _newPart;

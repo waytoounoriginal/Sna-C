@@ -62,6 +62,15 @@ void displayMap();
 //  Updates the score
 void updateScore();
 
+//  Draws the character at the specified position
+void drawChar(int x, int y, char c);
+
+//  Draws the string at the specified position - For ANSI
+void drawSymbol(int x, int y, char * c);
+
+//  Hides the Terminal cursor
+void _hideCursor();
+
 
 
 
