@@ -54,7 +54,7 @@
 
 
 //  The FPS of the game and the sleep time in ms
-#define FPS                     120
+#define FPS                     10
 #define SLEEP_TIME              1000 / FPS
 
 

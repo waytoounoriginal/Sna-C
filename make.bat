@@ -13,4 +13,6 @@ move snake.exe ../
 
 cd ../
 
+powershell write-host "Building finished!" -fore green
+
 pause

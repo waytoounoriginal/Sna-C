@@ -66,7 +66,7 @@ void displayMap()
 
     puts(map);
 
-    SLEEP;
+    //  SLEEP;
 
     CNS_CLEAR;
 }
@@ -107,7 +107,7 @@ void input()
         }
     }
 
-    _sleep(100);
+    SLEEP
 }
 
 void collisionCheck(Snake *_head)

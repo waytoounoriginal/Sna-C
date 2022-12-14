@@ -8,7 +8,7 @@ void initSnake() {
     head = (Snake *)malloc(sizeof(Snake));
 
     *head = (Snake){
-        .x = STARTING_X + 5, .y = STARTING_Y + 5, .prev = NULL, .next = NULL, .currDir = DOWN, .symbol = SNAKE_HEAD_TILE
+        .x = STARTING_X + STARTING_LENGTH, .y = STARTING_Y + STARTING_LENGTH, .prev = NULL, .next = NULL, .currDir = DOWN, .symbol = SNAKE_HEAD_TILE
     };
 
     last = head;
