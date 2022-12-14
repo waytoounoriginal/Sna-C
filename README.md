@@ -17,13 +17,16 @@
 
 # **The reason for starting this project**
 
-    The main reason I started working on this project is to get more familiar with the C programming language, as well as get more comfortable with memory management (which I'm not sure I'm succeeding at, oh well) and, obviously (as seen from the implementation itself), linked-lists.
+     The main reason I started working on this project is to get more familiar with the C programming language, 
+     as well as get more comfortable with memory management (which I'm not sure I'm succeeding at, oh well) and,
+     obviously (as seen from the implementation itself), linked-lists.
 
 <br></br>
 
 # **More features or is this the end?**
 
-    Woah, just hold back a bit; the game is still as barebones as it gets. It doesn't even have a `Start` screen!
+    Woah, just hold back a bit; the game is still as barebones as it gets.
+    It doesn't even have a `Start` screen!
 
     However, I do have some plans for this! Stay tuned!
 
