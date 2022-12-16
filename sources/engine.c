@@ -266,6 +266,9 @@ void killSnake(Snake * _head){
         SLEEP;
     }
 
+    //  Exit the program
+    exit(0);
+
 
 }
 
