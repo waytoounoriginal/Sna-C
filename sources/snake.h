@@ -50,8 +50,9 @@ typedef struct snake {
     int y;
 
     Keys currDir;
+    Colors color;
 
-    char * symbol;
+    char symbol;
 
     struct snake * next;
     struct snake * prev;
@@ -66,9 +67,6 @@ extern Snake * last;
 
 //  Initializes the snake, as well as mallocs the memory for it
 void initSnake();
-
-//  Initializes the symbol of the snake
-char * initSymbol(char * _color, char _symbol);
 
 //  Inserts a new part at the end of the snake.
 //  Basically the insert function of a linked list.

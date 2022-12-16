@@ -8,11 +8,16 @@ powershell write-host "Starting Job..." -fore green
 cd ./sources
 powershell write-host "Building Sna-C..." -fore green
 
-gcc snake.c engine.c -o snake -O2 -Wall -Winit-self -Wpointer-arith -Wno-unused-function
-move snake.exe ../
+gcc snake.c engine.c main.c -o snake -O2 -Wall -Winit-self -Wpointer-arith -Wno-unused-function
 
-cd ../
+if %ERRORLEVEL% NEQ 0 (
+    powershell write-host "Build Failed!" -fore red
+) else (
+    move snake.exe ../
 
-powershell write-host "Building finished!" -fore green
+    cd ../
+
+    powershell write-host "Building finished!" -fore green
+)
 
 pause
