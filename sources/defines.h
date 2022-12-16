@@ -84,8 +84,38 @@
 
 #endif
 
-#ifdef __linux__
-#include <unistd.h>
+#ifdef __unix__
+
+  //  The linux integration of the terminal toolset.
+  //  
+  //  Does not yet support the MAXIMIZE macro, nor works
+
+  #include <ncurses.h>
+
+  #define CNS_CLEAR                      move(0, 0);
+  #define MOVE_CURSOR(x, y)              move(y, x);
+  #define SLEEP                          usleep(SLEEP_TIME * 1000);
+  #define MAXIMIZE                       //  Not supported
+
+  typedef enum Colors
+  {
+    //  Primary colors RGB
+    RED       = COLOR_RED,
+    GREEN     = COLOR_GREEN,
+    BLUE      = COLOR_BLUE,
+
+    //  Default color
+    WHITE     = COLOR_WHITE,
+
+    //  Secondary colors CMY
+    CYAN      = COLOR_CYAN,
+    YELLOW    = COLOR_YELLOW,
+    PURPLE    = COLOR_MAGENTA,
+    MAGENTA   = PURPLE
+  } Colors;
+
+  #define SET_CURSOR_COLOR(color)         attron(COLOR_PAIR(color));
+
 #endif
 
 //  ========================
