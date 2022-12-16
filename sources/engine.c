@@ -1,28 +1,15 @@
 #include "engine.h"
 
+
+//  Extern definitions
+
 Fruit fruit;
-
-int main()
-{
-    MAXIMIZE;
-    //  displayMainMenu();
-
-    initGeneral();
-
-    while (1)
-    {
-        input();
-
-        drawSnake(head);
-
-        displayMap();
-    }
-
-    return 0;
-}
+int length = 0;
+char map[MAP_HEIGHT][MAP_WIDTH + 1];
 
 void initGeneral()
 {
+    _hideCursor();
 
     srand(time(NULL));
 
@@ -148,11 +135,34 @@ void collisionCheck(Snake *_head)
         break;
 
     case SNAKE_BODY_TILE:
-        exit(0);
+        killSnake(head);
         break;
     }
 }
 
+//  Terminal thingys
+
+void drawChar(int x, int y, char symbol)
+{
+    MOVE_CURSOR(x, y);
+    putchar(symbol);
+}
+
+void _hideCursor()
+{
+    HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_CURSOR_INFO ConCurInf;
+
+    ConCurInf.dwSize = 10;
+    ConCurInf.bVisible = FALSE;
+
+    SetConsoleCursorInfo(hOut, &ConCurInf);
+}
+
+
+
+//  Basically moves each part to the previous one's position
+//  in the case that the part is the one before the head, it will move to the head's position with the tempX and tempY variables
 void drawSnake(Snake *_head)
 {
 
@@ -161,12 +171,15 @@ void drawSnake(Snake *_head)
     {
 
         map[_head->y][_head->x] = MAP_TILE;
+        drawChar(_head->x, _head->y, MAP_TILE);
 
         _head = _head->next;
     }
 
     //  Give the default value back
     _head = head;
+
+    int tempX = _head->x, tempY = _head->y;
 
     //  Snake * temp = _head;
 
@@ -197,7 +210,11 @@ void drawSnake(Snake *_head)
 
     collisionCheck(_head);
 
+    //   Setting the cursor color to the snake's color
+    SET_CURSOR_COLOR(_head->color);
+
     map[_head->y][_head->x] = _head->symbol;
+    drawChar(_head->x, _head->y, _head->symbol);
 
     _head = last;
 
@@ -215,22 +232,47 @@ void drawSnake(Snake *_head)
         }
         else
         {
-            _head->x = _prevCurrDir == UP || _prevCurrDir == DOWN
-                           ? _prevX
-                           : _prevX + (_prevCurrDir == LEFT ? 1 : -1);
-
-            _head->y = _prevCurrDir == LEFT || _prevCurrDir == RIGHT
-                           ? _prevY
-                           : _prevY + (_prevCurrDir == UP ? 1 : -1);
+            _head->x = tempX;
+            _head->y = tempY;
         }
 
         collisionCheck(_head);
 
         map[_head->y][_head->x] = _head->symbol;
+        drawChar(_head->x, _head->y, _head->symbol);
 
         _head = _head->prev;
     }
+
+    //  Reset the cursor color to the default one
+    SET_CURSOR_COLOR(WHITE);
 }
+
+//  Kills the snake and frees the memory
+void killSnake(Snake * _head){
+
+    while(_head != NULL){
+
+        //  The death animation
+        map[_head->y][_head->x] = MAP_TILE;
+        drawChar(_head->x, _head->y, MAP_TILE);
+
+        Snake * temp = _head->next;
+
+        free(_head);
+
+        _head = temp;
+
+        SLEEP;
+    }
+
+    //  Exit the program
+    exit(0);
+
+
+}
+
+
 
 void spawnFruit(Fruit *_fruit)
 {
@@ -238,8 +280,21 @@ void spawnFruit(Fruit *_fruit)
     //  Reset current position
     map[_fruit->y][_fruit->x] = MAP_TILE;
 
-    _fruit->x = rand() % (MAP_WIDTH - 5) + 2;
-    _fruit->y = rand() % (MAP_HEIGHT - 5) + 2;
+    //  Solving the bug where the fruit spawns on the snake
+
+    int _maxArea = length + STARTING_LENGTH < 5 ? 5 : length + STARTING_LENGTH;
+
+    do {
+        _fruit->x = rand() % (MAP_WIDTH - 5) + 2;
+        _fruit->y = rand() % (MAP_HEIGHT - 5) + 2;
+
+    } while(
+        _fruit->x >= head->x - _maxArea && _fruit->x <= head->x + _maxArea 
+        && 
+        _fruit->y >= head->y - _maxArea && _fruit->y <= head->y + _maxArea
+    );
+
+    DEBUG_PRINT("Fruit spawned at\nx: %d, y: %d", _fruit->x, _fruit->y);
 
     drawFruit(_fruit);
 }
@@ -248,12 +303,13 @@ void drawFruit(Fruit *_fruit)
 {
 
     map[_fruit->y][_fruit->x] = FRUIT_TILE;
+    drawChar(_fruit->x, _fruit->y, FRUIT_TILE);
 }
 
 void updateScore()
 {
     MOVE_CURSOR(SCORE_X, SCORE_Y);
-    printf("%d", length++);
+    printf("%d", ++length);
 
     CNS_CLEAR;
 }

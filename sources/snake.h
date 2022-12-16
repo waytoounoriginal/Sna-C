@@ -50,6 +50,7 @@ typedef struct snake {
     int y;
 
     Keys currDir;
+    Colors color;
 
     char symbol;
 

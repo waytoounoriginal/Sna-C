@@ -3,12 +3,15 @@
 Snake * head;
 Snake * last;
 
+Colors _color = CYAN;
+
 void initSnake() {
 
     head = (Snake *)malloc(sizeof(Snake));
 
+
     *head = (Snake){
-        .x = STARTING_X + STARTING_LENGTH, .y = STARTING_Y + STARTING_LENGTH, .prev = NULL, .next = NULL, .currDir = DOWN, .symbol = SNAKE_HEAD_TILE
+        .x = STARTING_X + STARTING_LENGTH, .y = STARTING_Y + STARTING_LENGTH, .prev = NULL, .next = NULL, .currDir = DOWN, .symbol = SNAKE_HEAD_TILE, .color = _color
     };
 
     last = head;
@@ -54,7 +57,7 @@ void insertPart(Snake * _head) {
     }
 
     *_newPart = (Snake) {
-        .x = last->x + addX, .y = last->y + addY, .prev = last,.next = NULL, .currDir = last->currDir, .symbol = SNAKE_BODY_TILE
+        .x = last->x + addX, .y = last->y + addY, .prev = last,.next = NULL, .currDir = last->currDir, .symbol = SNAKE_BODY_TILE, .color = head->color
     };
 
     last->next = _newPart;
@@ -62,5 +65,3 @@ void insertPart(Snake * _head) {
     last = _newPart;
 
 }
-
-

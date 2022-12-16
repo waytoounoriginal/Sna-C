@@ -35,10 +35,10 @@
 //  The map, along with the snake and the fruit
 //
 //  The map is an array of [MAP_HEIGHT] rows and [MAP_WIDTH] + 1 columns to account for the '\0' character
-char map[MAP_HEIGHT][MAP_WIDTH + 1];
+extern char map[MAP_HEIGHT][MAP_WIDTH + 1];
 
-//  The score 
-int length = 1;
+extern int length;
+
 
 
 //  ========================
@@ -61,6 +61,13 @@ void displayMap();
 
 //  Updates the score
 void updateScore();
+
+//  Draws the character at the specified position
+void drawChar(int x, int y, char c);
+
+
+//  Hides the Terminal cursor
+void _hideCursor();
 
 
 
@@ -98,6 +105,8 @@ void collisionCheck(Snake * _head);
 //
 /// @param _head The snake's head. Type: Snake *
 void drawSnake(Snake * _head);
+
+void killSnake(Snake * _head);
 
 
 
