@@ -33,12 +33,12 @@
 //
 //  ========================
 
-#define VERSION_MAJOR 1
-#define VERSION_MINOR 0
-#define VERSION_PATCH 1
+#define VERSION_MAJOR "1"
+#define VERSION_MINOR "0"
+#define VERSION_PATCH "1"
 
 #define OWNER         "Mike4544"
-#define CONTRIBUTORS  "Darius\nDeea\n"
+#define CONTRIBUTORS  "TBA"
 
 //  ========================
 
@@ -52,7 +52,7 @@
 #include <stdlib.h>
 #include <conio.h>
 #include <time.h>
-#include <string.h>
+#include <stdbool.h>
 
 #ifdef _WIN32
 #include <windows.h>
