@@ -66,9 +66,6 @@ void updateScore();
 void drawChar(int x, int y, char c);
 
 
-//  Hides the Terminal cursor
-void _hideCursor();
-
 
 
 

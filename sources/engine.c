@@ -9,7 +9,7 @@ char map[MAP_HEIGHT][MAP_WIDTH + 1];
 
 void initGeneral()
 {
-    _hideCursor();
+    HIDE_CURSOR;
 
     srand(time(NULL));
 
@@ -61,7 +61,7 @@ void displayMap()
 void input()
 {
 
-    if (kbhit())
+    if (KBHIT))
     {
 
         char ch = getch();
@@ -106,7 +106,7 @@ void collisionCheck(Snake *_head)
         switch (head->currDir)
         {
         case UP:
-            head->y = MAP_HEIGHT - 3;
+            head->y = MAP_HEIGHT - 2;
             break;
 
         case DOWN:
@@ -114,7 +114,7 @@ void collisionCheck(Snake *_head)
             break;
 
         case LEFT:
-            head->x = MAP_WIDTH - 3;
+            head->x = MAP_WIDTH - 2;
             break;
 
         case RIGHT:
@@ -146,17 +146,6 @@ void drawChar(int x, int y, char symbol)
 {
     MOVE_CURSOR(x, y);
     putchar(symbol);
-}
-
-void _hideCursor()
-{
-    HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
-    CONSOLE_CURSOR_INFO ConCurInf;
-
-    ConCurInf.dwSize = 10;
-    ConCurInf.bVisible = FALSE;
-
-    SetConsoleCursorInfo(hOut, &ConCurInf);
 }
 
 
